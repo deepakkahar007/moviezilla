@@ -1,19 +1,15 @@
-import { fetchQuery } from "@/lib/utils";
+import { fetchMovies } from "@/lib/utils";
 import MovieCard from "./MovieCard";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const Movies = () => {
-  const [data, setData] = useState([]);
-
-  (async () => {
-    const { data } = await fetchQuery({
-      key: "action",
-      url: "?_sort=year&_order=asc&_limit=10",
-    });
-    setData(data?.data);
-
-    return;
-  })();
+  const { data } = useQuery({
+    queryKey: ["newMovies"],
+    queryFn: async () => {
+      const res = await fetchMovies("?_sort=year&_limit=10");
+      return res;
+    },
+  });
 
   return (
     <div className="mx-6 mt-2 w-full scroll-smooth">
@@ -22,19 +18,15 @@ const Movies = () => {
       </h1>
 
       <div className="grid grid-cols-2 gap-1 space-y-2 lg:grid-cols-5">
-        {data.length == 0 ? (
-          <h1>loading...</h1>
-        ) : (
-          data.map((m: any) => (
-            <MovieCard
-              key={m.rank}
-              id={m.rank}
-              title={m.title}
-              img={m.image}
-              genre={m.genre}
-            />
-          ))
-        )}
+        {data?.data.map((m: any) => (
+          <MovieCard
+            key={m.rank}
+            id={m.rank}
+            title={m.title}
+            img={m.image}
+            genre={m.genre}
+          />
+        ))}
       </div>
     </div>
   );
