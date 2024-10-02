@@ -1,26 +1,20 @@
 import { useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchMovies } from "../lib/utils";
-import MovieCard from "@/components/MovieCard";
+import { CardLoading } from "@/components/Loading";
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Image from "../components/Image";
-import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
 
 const MoviesCategories = () => {
   const { categorie } = useParams();
-
-  const query = useQueryClient();
-
-  // query.invalidateQueries({ queryKey: ["categories"] });
 
   const { data, isLoading } = useQuery({
     queryKey: ["categories"],
@@ -38,30 +32,28 @@ const MoviesCategories = () => {
       </h1>
 
       <div className="mx-2 grid grid-cols-2 gap-3 space-x-4 lg:grid-cols-5 lg:gap-4 lg:space-y-3">
-        {isLoading ? (
-          <h1>loading ....</h1>
-        ) : (
-          data.map(({ title, big_image, imdb_link, rating }: any) => {
-            return (
-              <a key={title} href={imdb_link} target="_blank">
-                <Card className="flex min-h-9 w-44 cursor-pointer flex-col items-center justify-between hover:border hover:border-primary">
-                  <CardHeader>
-                    <CardTitle className="flex flex-col justify-between text-lg font-semibold capitalize text-primary">
-                      <span className="text-white">
-                        Rating -{rating}
-                        <Star color="#e5a50a" size={"16px"} />
-                      </span>
-                      {title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Image src={big_image} className="h-40" />
-                  </CardContent>
-                </Card>
-              </a>
-            );
-          })
-        )}
+        {isLoading
+          ? [1, 2, 3, 4, 5].map((i) => <CardLoading key={i} />)
+          : data.map(({ title, big_image, imdb_link, rating }: any) => {
+              return (
+                <a key={title} href={imdb_link} target="_blank">
+                  <Card className="flex min-h-9 w-44 cursor-pointer flex-col items-center justify-between hover:border hover:border-primary">
+                    <CardHeader>
+                      <CardTitle className="flex flex-col justify-between text-lg font-semibold capitalize text-primary">
+                        {title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <Image src={big_image} className="h-40" />
+                    </CardContent>
+                    <CardFooter className="flex space-x-2">
+                      <span className="text-white">IMDB Rating - {rating}</span>
+                      <Star color="#e5a50a" size={"16px"} />
+                    </CardFooter>
+                  </Card>
+                </a>
+              );
+            })}
       </div>
     </div>
   );

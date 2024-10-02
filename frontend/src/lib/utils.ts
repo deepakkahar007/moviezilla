@@ -29,7 +29,7 @@ export const fetchQuery = async ({ key, url }: FetchMoviesTypes) => {
     queryKey: [key],
     queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_SERVER_URL + url}`);
-      const movies = await Wait(3000).then(() => res);
+      const movies = await Wait(3000).then((res) => res);
       return movies;
     },
   });

@@ -10,7 +10,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Categories from "./pages/categories";
 import TopMovies from "./pages/TopMovies";
 import Navbar from "./components/Navbar.tsx";
-import Movie from "./pages/Movie.tsx";
 import MoviesCategories from "./pages/MoviesCategories.tsx";
 
 const queryClient = new QueryClient({
@@ -49,7 +48,6 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <Movie />
       </>
     ),
   },

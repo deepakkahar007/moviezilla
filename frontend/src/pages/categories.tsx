@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "../components/Image";
 import { Link } from "react-router-dom";
 
@@ -34,7 +27,7 @@ const Categories = () => {
       </h1>
 
       <div className="mx-3 my-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:space-x-4">
-        {categories.map(({ title, url, poster }) => {
+        {categories.map(({ title }) => {
           return (
             <Link key={title} to={`/categories/${title}`}>
               <Card className="flex min-h-9 w-44 cursor-pointer flex-col items-center justify-between hover:border hover:border-primary">

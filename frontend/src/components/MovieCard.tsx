@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -17,7 +16,7 @@ type MovieCardType = {
   genre?: string[];
 };
 
-const MovieCard = ({ id, img, title, url, genre }: MovieCardType) => {
+const MovieCard = ({ img, title, genre }: MovieCardType) => {
   return (
     <Link to={`movie/${title}`}>
       <Card className="flex min-h-9 w-44 cursor-pointer flex-col items-center justify-between hover:border hover:border-primary">
